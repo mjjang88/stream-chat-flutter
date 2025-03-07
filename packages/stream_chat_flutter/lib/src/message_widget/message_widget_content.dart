@@ -231,21 +231,21 @@ class MessageWidgetContent extends StatelessWidget {
           reverse ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (showBottomRow)
+          Padding(
+            padding: EdgeInsets.only(
+              left: !reverse ? bottomRowPadding : 0,
+              right: reverse ? bottomRowPadding : 0,
+              bottom: isPinned && showPinHighlight ? 6.0 : 0.0,
+            ),
+            child: _buildBottomRow(context),
+          ),
         Stack(
           clipBehavior: Clip.none,
           alignment: reverse
               ? AlignmentDirectional.bottomEnd
               : AlignmentDirectional.bottomStart,
           children: [
-            if (showBottomRow)
-              Padding(
-                padding: EdgeInsets.only(
-                  left: !reverse ? bottomRowPadding : 0,
-                  right: reverse ? bottomRowPadding : 0,
-                  top: isPinned && showPinHighlight ? 6.0 : 0.0,
-                ),
-                child: _buildBottomRow(context),
-              ),
             Padding(
               padding: EdgeInsets.only(
                 bottom: isPinned && showPinHighlight ? 8.0 : 0.0,
