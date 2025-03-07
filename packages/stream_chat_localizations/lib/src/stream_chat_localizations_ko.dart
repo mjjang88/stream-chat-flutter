@@ -31,19 +31,19 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
     if (users.isEmpty) return '';
     final first = users.first;
     if (users.length == 1) {
-      return '${first.name} 타이핑중';
+      return '${first.name} 작성중';
     }
-    return '${first.name}하고 ${users.length - 1}명 타이핑중';
+    return '${first.name}하고 ${users.length - 1}명 작성중';
   }
 
   @override
-  String get threadReplyLabel => '스레드 응답입니다';
+  String get threadReplyLabel => '댓글입니다';
 
   @override
   String get onlyVisibleToYouText => '당신만 볼 수 있습니다';
 
   @override
-  String threadReplyCountText(int count) => '$count스레드 답장';
+  String threadReplyCountText(int count) => '$count댓글';
 
   @override
   String attachmentsUploadProgressText({
@@ -58,7 +58,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
     required User currentUser,
   }) {
     final pinnedByCurrentUser = currentUser.id == pinnedBy.id;
-    if (pinnedByCurrentUser) return '당신의 핀';
+    if (pinnedByCurrentUser) return '친구님의 핀';
     return '${pinnedBy.name}의 핀';
   }
 
@@ -69,7 +69,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get emptyMessagesText => '현재 메시지가 없습니다';
 
   @override
-  String get genericErrorText => '뭔가 잘못됐습니다';
+  String get genericErrorText => '오류가 발생했습니다.';
 
   @override
   String get loadingMessagesError => '메시지를 로드하는 동안 오류가 발생했습니다';
@@ -105,7 +105,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get reconnectingLabel => '다시 연결하는 중...';
 
   @override
-  String get alsoSendAsDirectMessageLabel => '다이렉트 메시지로도 보냅니다';
+  String get alsoSendAsDirectMessageLabel => '개인 메시지로도 보냅니다';
 
   @override
   String get addACommentOrSendLabel => '주석을 추가하거나 보냅니다';
@@ -114,10 +114,10 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get searchGifLabel => 'GIF 검색';
 
   @override
-  String get writeAMessageLabel => '메시지 쓰기';
+  String get writeAMessageLabel => '메시지 입력';
 
   @override
-  String get instantCommandsLabel => '인스턴트 커맨즈';
+  String get instantCommandsLabel => '빠른 행동';
 
   @override
   String fileTooLargeAfterCompressionError(double limitInMB) =>
@@ -154,7 +154,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get okLabel => '확인';
 
   @override
-  String get somethingWentWrongError => '뭔가 잘못됐습느다';
+  String get somethingWentWrongError => '오류가 발생했습니다.';
 
   @override
   String get addMoreFilesLabel => '파일을 추가함';
@@ -167,22 +167,22 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get allowGalleryAccessMessage => '갤러리에 대한 액세스를 허용합니다';
 
   @override
-  String get flagMessageLabel => ' 메시지를 플래그함';
+  String get flagMessageLabel => ' 메시지를 신고함';
 
   @override
-  String get flagMessageQuestion => '추가 조사를 위해 진행자에게 이 메시지의 복사본을 전송하시겠습니까?';
+  String get flagMessageQuestion => '관리자에게 이 메시지를 전송하시겠습니까?';
 
   @override
-  String get flagLabel => '플래그함';
+  String get flagLabel => '신고함';
 
   @override
   String get cancelLabel => '취소';
 
   @override
-  String get flagMessageSuccessfulLabel => '메시지에 플래그가 지정되었습니다';
+  String get flagMessageSuccessfulLabel => '메시지를 신고했습니다.';
 
   @override
-  String get flagMessageSuccessfulText => '메시지가 진행자에게 보고되었습니다.';
+  String get flagMessageSuccessfulText => '메시지가 관리자에게 보고되었습니다.';
 
   @override
   String get deleteLabel => '삭제';
@@ -201,8 +201,8 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
 
   @override
   String togglePinUnpinText({required bool pinned}) {
-    if (pinned) return '대화의 핀을 분리합니다';
-    return '대화에 고정합니다';
+    if (pinned) return '대화 고정 해제';
+    return '대화를 고정합니다';
   }
 
   @override
@@ -270,7 +270,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get startAChatLabel => '대화를 시작합니다.';
 
   @override
-  String get loadingChannelsError => '채널을 로드하는 동안 오류가 발생했습니다.';
+  String get loadingChannelsError => '채널을 불러오는 동안 오류가 발생했습니다.';
 
   @override
   String get deleteConversationLabel => '대화를 삭제합니다.';
@@ -327,7 +327,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get giphyLabel => '지피';
 
   @override
-  String get shuffleLabel => '섞기';
+  String get shuffleLabel => '재생성';
 
   @override
   String get sendLabel => '보내기';
@@ -341,7 +341,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   // This is the word for 'customer' or 'user' because saying 'you' directly
   // is too informal and rude
   @override
-  String get youText => '당신';
+  String get youText => '친구님';
 
   @override
   String galleryPaginationText({

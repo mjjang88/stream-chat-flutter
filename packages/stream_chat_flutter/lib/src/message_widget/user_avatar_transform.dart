@@ -34,21 +34,13 @@ class UserAvatarTransform extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(
-        0,
-        translateUserAvatar
-            ? (messageTheme.avatarTheme?.constraints.maxHeight ?? 40) / 2
-            : 0,
-      ),
-      child: userAvatarBuilder?.call(context, message.user!) ??
-          StreamUserAvatar(
-            user: message.user!,
-            onTap: onUserAvatarTap,
-            constraints: messageTheme.avatarTheme!.constraints,
-            borderRadius: messageTheme.avatarTheme!.borderRadius,
-            showOnlineStatus: false,
-          ),
-    );
+    return userAvatarBuilder?.call(context, message.user!) ??
+        StreamUserAvatar(
+          user: message.user!,
+          onTap: onUserAvatarTap,
+          constraints: messageTheme.avatarTheme!.constraints,
+          borderRadius: messageTheme.avatarTheme!.borderRadius,
+          showOnlineStatus: false,
+        );
   }
 }

@@ -242,7 +242,7 @@ class MessageWidgetContent extends StatelessWidget {
                 padding: EdgeInsets.only(
                   left: !reverse ? bottomRowPadding : 0,
                   right: reverse ? bottomRowPadding : 0,
-                  bottom: isPinned && showPinHighlight ? 6.0 : 0.0,
+                  top: isPinned && showPinHighlight ? 6.0 : 0.0,
                 ),
                 child: _buildBottomRow(context),
               ),
