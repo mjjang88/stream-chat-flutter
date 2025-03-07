@@ -128,7 +128,7 @@ class BottomRow extends StatelessWidget {
         isDeleted: isDeleted ?? this.isDeleted,
         message: message ?? this.message,
         showThreadReplyIndicator:
-            showThreadReplyIndicator ?? this.showThreadReplyIndicator,
+        showThreadReplyIndicator ?? this.showThreadReplyIndicator,
         showInChannel: showInChannel ?? this.showInChannel,
         showTimeStamp: showTimeStamp ?? this.showTimeStamp,
         showUsername: showUsername ?? this.showUsername,
@@ -143,11 +143,11 @@ class BottomRow extends StatelessWidget {
         hasNonUrlAttachments: hasNonUrlAttachments ?? this.hasNonUrlAttachments,
         streamChat: streamChat ?? this.streamChat,
         deletedBottomRowBuilder:
-            deletedBottomRowBuilder ?? this.deletedBottomRowBuilder,
+        deletedBottomRowBuilder ?? this.deletedBottomRowBuilder,
         onThreadTap: onThreadTap ?? this.onThreadTap,
         usernameBuilder: usernameBuilder ?? this.usernameBuilder,
         sendingIndicatorBuilder:
-            sendingIndicatorBuilder ?? this.sendingIndicatorBuilder,
+        sendingIndicatorBuilder ?? this.sendingIndicatorBuilder,
       );
 
   @override
@@ -185,13 +185,6 @@ class BottomRow extends StatelessWidget {
     const usernameKey = Key('username');
 
     final children = [
-      if (showUsername)
-        usernameBuilder?.call(context, message) ??
-            Username(
-              key: usernameKey,
-              message: message,
-              messageTheme: messageTheme,
-            ),
       if (showEditedLabel && isEdited)
         Text(
           context.translations.editedMessageLabel,
@@ -218,8 +211,8 @@ class BottomRow extends StatelessWidget {
 
     final threadIndicatorWidgets = [
       if (showThreadTail)
-        // Added builder to use the nearest context to get the right
-        // textScaleFactor value.
+      // Added builder to use the nearest context to get the right
+      // textScaleFactor value.
         Builder(
           builder: (context) {
             return Padding(
@@ -284,7 +277,7 @@ class BottomRow extends StatelessWidget {
         ],
       ),
       maxLines: 1,
-      textAlign: reverse ? TextAlign.right : TextAlign.left,
+      textAlign: TextAlign.right,
     );
   }
 }
