@@ -263,7 +263,7 @@ class MessageWidgetContent extends StatelessWidget {
                       currentUser: streamChat.currentUser!,
                     ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (!reverse &&
