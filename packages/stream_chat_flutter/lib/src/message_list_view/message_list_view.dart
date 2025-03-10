@@ -1287,8 +1287,7 @@ class _StreamMessageListViewState extends State<StreamMessageListView> {
         : 14.0;
 
     final showTimeStamp = (!isThreadMessage || _isThreadConversation) &&
-        !hasReplies &&
-        (hasTimeDiff || (!hasTimeDiff && !isPrevUserSame));
+        !hasReplies;
 
     final showUsername = !isMyMessage &&
         (hasTimeDiff || !isPrevUserSame);
