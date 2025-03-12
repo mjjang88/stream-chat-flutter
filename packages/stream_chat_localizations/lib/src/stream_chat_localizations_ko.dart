@@ -37,7 +37,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   }
 
   @override
-  String get threadReplyLabel => '댓글입니다';
+  String get threadReplyLabel => '댓글';
 
   @override
   String get onlyVisibleToYouText => '당신만 볼 수 있습니다';
@@ -93,7 +93,7 @@ class StreamChatLocalizationsKo extends GlobalStreamChatLocalizations {
   String get emptyChatMessagesText => '아직 채팅이 없습니다...';
 
   @override
-  String threadSeparatorText(int replyCount) => '$replyCount개의 답장';
+  String threadSeparatorText(int replyCount) => '$replyCount개의 댓글';
 
   @override
   String get connectedLabel => '연결중';
