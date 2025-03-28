@@ -31,11 +31,3 @@ flutter:
         default_package: stream_chat_localizations
       ios:
         default_package: stream_chat_localizations
-      windows:
-        default_package: stream_chat_localizations
-      linux:
-        default_package: stream_chat_localizations
-      macos:
-        default_package: stream_chat_localizations
-      web:
-        default_package: stream_chat_localizations

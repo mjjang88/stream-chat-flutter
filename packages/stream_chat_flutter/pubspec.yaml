@@ -55,14 +55,6 @@ flutter:
         default_package: stream_chat_flutter
       ios:
         default_package: stream_chat_flutter
-      windows:
-        default_package: stream_chat_flutter
-      linux:
-        default_package: stream_chat_flutter
-      macos:
-        default_package: stream_chat_flutter
-      web:
-        default_package: stream_chat_flutter
 
   assets:
     - images/
