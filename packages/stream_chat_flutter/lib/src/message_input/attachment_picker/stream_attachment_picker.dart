@@ -9,7 +9,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 const kDefaultMaxAttachmentSize = 100 * 1024 * 1024; // 100MB in Bytes
 
 /// The default maximum number of media attachments.
-const kDefaultMaxAttachmentCount = 10;
+const kDefaultMaxAttachmentCount = 30;
 
 /// Controller class for [StreamAttachmentPicker].
 class StreamAttachmentPickerController extends ValueNotifier<List<Attachment>> {
