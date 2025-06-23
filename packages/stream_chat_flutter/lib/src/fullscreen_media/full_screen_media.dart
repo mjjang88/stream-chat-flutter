@@ -357,23 +357,33 @@ class _ImageViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        iconTheme: Theme.of(context).appBarTheme.iconTheme?.copyWith(
-              color: Colors.white,
+      body: Stack(
+        children: [
+          PhotoView.customChild(
+            maxScale: PhotoViewComputedScale.covered * 4.0,
+            minScale: PhotoViewComputedScale.contained,
+            initialScale: PhotoViewComputedScale.contained,
+            backgroundDecoration: const BoxDecoration(
+              color: Colors.transparent,
             ),
-      ),
-      body: PhotoView.customChild(
-        maxScale: PhotoViewComputedScale.covered * 2.5,
-        minScale: PhotoViewComputedScale.contained,
-        backgroundDecoration: const BoxDecoration(
-          color: Colors.transparent,
-        ),
-        child: StreamMediaAttachmentThumbnail(
-          media: attachment,
-          width: double.infinity,
-          height: double.infinity,
-        ),
+            child: StreamMediaAttachmentThumbnail(
+              media: attachment,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            right: 16,
+            child: IconButton(
+              icon: const Icon(
+                Icons.close,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+        ],
       ),
     );
   }
