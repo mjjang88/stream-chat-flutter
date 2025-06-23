@@ -290,7 +290,7 @@ class _FullScreenMediaState extends State<StreamFullScreenMedia> {
                           if (attachment.type == AttachmentType.image ||
                               attachment.type == AttachmentType.giphy) {
                             return PhotoView.customChild(
-                              maxScale: PhotoViewComputedScale.covered,
+                              maxScale: PhotoViewComputedScale.covered * 2.5,
                               minScale: PhotoViewComputedScale.contained,
                               backgroundDecoration: const BoxDecoration(
                                 color: Colors.transparent,
