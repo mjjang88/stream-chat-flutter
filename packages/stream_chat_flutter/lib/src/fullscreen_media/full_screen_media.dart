@@ -231,111 +231,108 @@ class _FullScreenMediaState extends State<StreamFullScreenMedia> {
             ],
           );
         },
-        child: InkWell(
-          onTap: switchDisplayingDetail,
-          child: KeyboardShortcutRunner(
-            onEscapeKeypress: Navigator.of(context).pop,
-            onLeftArrowKeypress: () {
-              if (_currentPage.value > 0) {
-                _currentPage.value--;
-                _pageController.previousPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
+        child: KeyboardShortcutRunner(
+          onEscapeKeypress: Navigator.of(context).pop,
+          onLeftArrowKeypress: () {
+            if (_currentPage.value > 0) {
+              _currentPage.value--;
+              _pageController.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            }
+          },
+          onRightArrowKeypress: () {
+            if (_currentPage.value <
+                widget.mediaAttachmentPackages.length - 1) {
+              _currentPage.value++;
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            }
+          },
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: widget.mediaAttachmentPackages.length,
+            onPageChanged: (val) {
+              _currentPage.value = val;
+              if (videoPackages.isEmpty) return;
+              final currentAttachment =
+                  widget.mediaAttachmentPackages[val].attachment;
+              for (final e in videoPackages.values) {
+                if (e._attachment != currentAttachment) {
+                  e._chewieController?.pause();
+                }
+              }
+              if (widget.autoplayVideos &&
+                  currentAttachment.type == AttachmentType.video) {
+                final controller = videoPackages[currentAttachment.id]!;
+                controller._chewieController?.play();
               }
             },
-            onRightArrowKeypress: () {
-              if (_currentPage.value <
-                  widget.mediaAttachmentPackages.length - 1) {
-                _currentPage.value++;
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: widget.mediaAttachmentPackages.length,
-              onPageChanged: (val) {
-                _currentPage.value = val;
-                if (videoPackages.isEmpty) return;
-                final currentAttachment =
-                    widget.mediaAttachmentPackages[val].attachment;
-                for (final e in videoPackages.values) {
-                  if (e._attachment != currentAttachment) {
-                    e._chewieController?.pause();
-                  }
-                }
-                if (widget.autoplayVideos &&
-                    currentAttachment.type == AttachmentType.video) {
-                  final controller = videoPackages[currentAttachment.id]!;
-                  controller._chewieController?.play();
-                }
-              },
-              itemBuilder: (context, index) {
-                final currentAttachmentPackage =
-                    widget.mediaAttachmentPackages[index];
-                final attachment = currentAttachmentPackage.attachment;
-                return ValueListenableBuilder(
-                  valueListenable: _isDisplayingDetail,
-                  builder: (context, isDisplayingDetail, child) {
-                    return AnimatedContainer(
-                      duration: kThemeChangeDuration,
-                      color: isDisplayingDetail
-                          ? StreamChannelHeaderTheme.of(context).color
-                          : Colors.black,
-                      child: Builder(
-                        builder: (context) {
-                          if (attachment.type == AttachmentType.image ||
-                              attachment.type == AttachmentType.giphy) {
-                            return GestureDetector(
-                              onTap: () => _showImageViewer(context, attachment),
-                              child: PhotoView.customChild(
-                                maxScale: PhotoViewComputedScale.covered,
-                                minScale: PhotoViewComputedScale.contained,
-                                backgroundDecoration: const BoxDecoration(
-                                  color: Colors.transparent,
-                                ),
-                                child: StreamMediaAttachmentThumbnail(
-                                  media: attachment,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                ),
+            itemBuilder: (context, index) {
+              final currentAttachmentPackage =
+                  widget.mediaAttachmentPackages[index];
+              final attachment = currentAttachmentPackage.attachment;
+              return ValueListenableBuilder(
+                valueListenable: _isDisplayingDetail,
+                builder: (context, isDisplayingDetail, child) {
+                  return AnimatedContainer(
+                    duration: kThemeChangeDuration,
+                    color: isDisplayingDetail
+                        ? StreamChannelHeaderTheme.of(context).color
+                        : Colors.black,
+                    child: Builder(
+                      builder: (context) {
+                        if (attachment.type == AttachmentType.image ||
+                            attachment.type == AttachmentType.giphy) {
+                          return GestureDetector(
+                            onTap: () => _showImageViewer(context, attachment),
+                            child: PhotoView.customChild(
+                              maxScale: PhotoViewComputedScale.contained,
+                              minScale: PhotoViewComputedScale.contained,
+                              backgroundDecoration: const BoxDecoration(
+                                color: Colors.transparent,
                               ),
-                            );
-                          } else if (attachment.type == AttachmentType.video) {
-                            final controller = videoPackages[attachment.id]!;
-                            if (!controller.initialized) {
-                              return const Center(
-                                child: CircularProgressIndicator.adaptive(),
-                              );
-                            }
-
-                            final mediaQuery = MediaQuery.of(context);
-                            final bottomPadding = mediaQuery.padding.bottom;
-
-                            return AnimatedPadding(
-                              duration: kThemeChangeDuration,
-                              padding: EdgeInsets.symmetric(
-                                vertical: isDisplayingDetail
-                                    ? kToolbarHeight + bottomPadding
-                                    : 0,
+                              child: StreamMediaAttachmentThumbnail(
+                                media: attachment,
+                                width: double.infinity,
+                                height: double.infinity,
                               ),
-                              child: Chewie(
-                                controller: controller.chewieController!,
-                              ),
+                            ),
+                          );
+                        } else if (attachment.type == AttachmentType.video) {
+                          final controller = videoPackages[attachment.id]!;
+                          if (!controller.initialized) {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(),
                             );
                           }
 
-                          return const SizedBox();
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+                          final mediaQuery = MediaQuery.of(context);
+                          final bottomPadding = mediaQuery.padding.bottom;
+
+                          return AnimatedPadding(
+                            duration: kThemeChangeDuration,
+                            padding: EdgeInsets.symmetric(
+                              vertical: isDisplayingDetail
+                                  ? kToolbarHeight + bottomPadding
+                                  : 0,
+                            ),
+                            child: Chewie(
+                              controller: controller.chewieController!,
+                            ),
+                          );
+                        }
+
+                        return const SizedBox();
+                      },
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
