@@ -8,8 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:stream_chat_flutter/src/attachment/handler/common.dart';
 import 'package:stream_chat_flutter/src/attachment/handler/stream_attachment_handler_base.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import 'package:stream_chat/src/core/platform_detector/platform_detector.dart';
-import 'package:flutter/services.dart';
 
 /// StreamAttachmentHandler implementation for desktop.
 class StreamAttachmentHandlerDesktop extends StreamAttachmentHandler {
@@ -71,7 +69,6 @@ class StreamAttachmentHandler extends StreamAttachmentHandlerBase {
 
   late final _imagePicker = ImagePicker();
   late final _filePicker = FilePicker.platform;
-  static const MethodChannel _channel = MethodChannel('stream_chat_flutter/photo_picker');
 
   @override
   Future<Attachment?> pickImage({
@@ -81,11 +78,6 @@ class StreamAttachmentHandler extends StreamAttachmentHandlerBase {
     int? imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
   }) async {
-    // Use Android photo picker for Android devices when picking from gallery
-    if (CurrentPlatform.isAndroid && source == ImageSource.gallery) {
-      return await _pickImageWithAndroidPhotoPicker();
-    }
-    
     final image = await _imagePicker.pickImage(
       source: source,
       maxWidth: maxWidth,
@@ -103,11 +95,6 @@ class StreamAttachmentHandler extends StreamAttachmentHandlerBase {
     CameraDevice preferredCameraDevice = CameraDevice.rear,
     Duration? maxDuration,
   }) async {
-    // Use Android photo picker for Android devices when picking from gallery
-    if (CurrentPlatform.isAndroid && source == ImageSource.gallery) {
-      return await _pickVideoWithAndroidPhotoPicker();
-    }
-    
     final video = await _imagePicker.pickVideo(
       source: source,
       preferredCameraDevice: preferredCameraDevice,
@@ -215,44 +202,6 @@ class StreamAttachmentHandler extends StreamAttachmentHandlerBase {
     await file.delete();
 
     return path;
-  }
-
-  /// Picks an image using Android photo picker
-  Future<Attachment?> _pickImageWithAndroidPhotoPicker() async {
-    try {
-      final result = await _channel.invokeMethod('pickImage');
-      if (result != null && result is String) {
-        // Convert URI to XFile
-        final xFile = XFile(result);
-        return xFile.toAttachment(type: 'image');
-      }
-      return null;
-    } catch (e) {
-      // Fallback to regular image picker if Android photo picker fails
-      final image = await _imagePicker.pickImage(
-        source: ImageSource.gallery,
-      );
-      return image?.toAttachment(type: 'image');
-    }
-  }
-
-  /// Picks a video using Android photo picker
-  Future<Attachment?> _pickVideoWithAndroidPhotoPicker() async {
-    try {
-      final result = await _channel.invokeMethod('pickVideo');
-      if (result != null && result is String) {
-        // Convert URI to XFile
-        final xFile = XFile(result);
-        return xFile.toAttachment(type: 'video');
-      }
-      return null;
-    } catch (e) {
-      // Fallback to regular video picker if Android photo picker fails
-      final video = await _imagePicker.pickVideo(
-        source: ImageSource.gallery,
-      );
-      return video?.toAttachment(type: 'video');
-    }
   }
 }
 
