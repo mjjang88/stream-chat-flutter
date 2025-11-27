@@ -125,21 +125,27 @@ class _StreamGalleryFooterState extends State<StreamGalleryFooter> {
                     );
                   },
                 ),
-              InkWell(
-                onTap: widget.onTitleTap,
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        context.translations.galleryPaginationText(
-                          currentPage: widget.currentPage,
-                          totalPages: widget.totalPages,
+              Expanded(
+                child: Center(
+                  child: InkWell(
+                    onTap: widget.onTitleTap,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          context.translations.galleryPaginationText(
+                            currentPage: widget.currentPage,
+                            totalPages: widget.totalPages,
+                          ),
+                          style: galleryFooterThemeData.titleTextStyle,
                         ),
-                        style: galleryFooterThemeData.titleTextStyle,
-                      ),
-                    ],
+                        const SizedBox(width: 24),
+                        Text(
+                          '클릭해서 확대',
+                          style: galleryFooterThemeData.titleTextStyle,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
