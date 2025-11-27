@@ -340,21 +340,37 @@ class _FullScreenMediaState extends State<StreamFullScreenMedia> {
   }
 
   void _showImageViewer(BuildContext context, Attachment attachment) {
+    final currentIndex = widget.mediaAttachmentPackages.indexWhere(
+      (package) => package.attachment.id == attachment.id,
+    );
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => _ImageViewer(attachment: attachment),
+        builder: (_) => _ImageViewer(
+          attachment: attachment,
+          currentIndex: currentIndex >= 0 ? currentIndex : 0,
+          totalCount: widget.mediaAttachmentPackages.length,
+        ),
       ),
     );
   }
 }
 
 class _ImageViewer extends StatelessWidget {
-  const _ImageViewer({required this.attachment});
+  const _ImageViewer({
+    required this.attachment,
+    this.currentIndex = 0,
+    this.totalCount = 1,
+  });
 
   final Attachment attachment;
+  final int currentIndex;
+  final int totalCount;
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final bottomPadding = mediaQuery.padding.bottom;
+    
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -381,6 +397,36 @@ class _ImageViewer extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          Positioned(
+            bottom: bottomPadding + 16,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.translations.galleryPaginationText(
+                      currentPage: currentIndex,
+                      totalPages: totalCount,
+                    ),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  const Text(
+                    '클릭해서 확대',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
