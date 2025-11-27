@@ -25,9 +25,9 @@ class ThreadParticipants extends StatelessWidget {
     var padding = 0.0;
     return Stack(
       children: threadParticipants.map((user) {
-        padding += 8.0;
+        padding += 10.0;
         return Positioned(
-          right: padding - 8,
+          right: padding - 10,
           bottom: 0,
           top: 0,
           child: Container(
@@ -38,7 +38,7 @@ class ThreadParticipants extends StatelessWidget {
             padding: const EdgeInsets.all(1),
             child: StreamUserAvatar(
               user: user,
-              constraints: BoxConstraints.tight(const Size.fromRadius(7)),
+              constraints: BoxConstraints.tight(const Size.fromRadius(9)),
               showOnlineStatus: false,
             ),
           ),

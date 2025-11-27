@@ -70,6 +70,8 @@ class StreamMessageSendButton extends StatelessWidget {
       child: StreamSvgIcon(
         assetName: _getIdleSendIcon(),
         color: _messageInputTheme.sendButtonIdleColor,
+        width: 28,
+        height: 28,
       ),
     );
   }
@@ -82,14 +84,16 @@ class StreamMessageSendButton extends StatelessWidget {
       child: IconButton(
         onPressed: onSendMessage,
         padding: EdgeInsets.zero,
-        splashRadius: 24,
+        splashRadius: 32,
         constraints: const BoxConstraints.tightFor(
-          height: 24,
-          width: 24,
+          height: 32,
+          width: 32,
         ),
         icon: StreamSvgIcon(
           assetName: _getSendIcon(),
           color: _messageInputTheme.sendButtonColor,
+          width: 28,
+          height: 28,
         ),
       ),
     );

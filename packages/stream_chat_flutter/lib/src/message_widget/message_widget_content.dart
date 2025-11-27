@@ -290,12 +290,14 @@ class MessageWidgetContent extends StatelessWidget {
                                   padding: EdgeInsets.only(
                                     left: !reverse ? 4 : 0,
                                     right: reverse ? 4 : 0,
-                                    bottom: isPinned && showPinHighlight ? 6.0 : 0.0,
+                                    bottom: isPinned && showPinHighlight ? 8.0 : 4.0,
                                   ),
                                   child: Text(
                                     message.user?.name ?? '',
                                     maxLines: 1,
-                                    style: messageTheme.messageAuthorStyle,
+                                    style: messageTheme.messageAuthorStyle?.copyWith(
+                                      fontSize: (messageTheme.messageAuthorStyle?.fontSize ?? 12) + 2,
+                                    ),
                                   )
                               ),
                             PortalTarget(
@@ -432,7 +434,7 @@ class MessageWidgetContent extends StatelessWidget {
                   ],
                   if (showBottomRow)
                     SizedBox(
-                      height: context.textScaleFactor * 18.0,
+                      height: context.textScaleFactor * 18.0 + 6.0,
                     ),
                 ],
               ),

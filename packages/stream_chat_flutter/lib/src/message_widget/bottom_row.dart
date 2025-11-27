@@ -207,7 +207,7 @@ class BottomRow extends StatelessWidget {
     ];
 
     final showThreadTail =
-        (showThreadReplyIndicator || showInChannel) && !isOnlyEmoji;
+        showInChannel && !isOnlyEmoji;
 
     final threadIndicatorWidgets = [
       if (showThreadTail)
@@ -234,7 +234,7 @@ class BottomRow extends StatelessWidget {
       if (showInChannel || showThreadReplyIndicator) ...[
         if (showThreadParticipants)
           SizedBox.fromSize(
-            size: Size((threadParticipants!.length * 8.0) + 8, 16),
+            size: Size((threadParticipants!.length * 10.0) + 10, 20),
             child: ThreadParticipants(
               threadParticipants: threadParticipants,
               streamChatTheme: streamChatTheme,
@@ -244,7 +244,12 @@ class BottomRow extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: _onThreadTap,
-            child: Text(msg, style: messageTheme.repliesStyle),
+            child: Text(
+              msg,
+              style: messageTheme.repliesStyle?.copyWith(
+                fontSize: (messageTheme.repliesStyle?.fontSize ?? 12) + 2,
+              ),
+            ),
           ),
         ),
       ],
