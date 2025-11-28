@@ -187,6 +187,10 @@ class _FullScreenMediaState extends State<StreamFullScreenMedia> {
                         currentPage: currentPage,
                         totalPages: widget.mediaAttachmentPackages.length,
                         mediaAttachmentPackages: widget.mediaAttachmentPackages,
+                        onImageTap: (_currentAttachment.type == AttachmentType.image ||
+                                _currentAttachment.type == AttachmentType.giphy)
+                            ? () => _showImageViewer(context, _currentAttachment)
+                            : null,
                         mediaSelectedCallBack: (val) {
                           _currentPage.value = val;
                           _pageController.animateToPage(

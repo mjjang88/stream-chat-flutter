@@ -128,7 +128,7 @@ class _StreamGalleryFooterState extends State<StreamGalleryFooter> {
               Expanded(
                 child: Center(
                   child: InkWell(
-                    onTap: widget.onTitleTap,
+                    onTap: widget.onImageTap ?? widget.onTitleTap,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
