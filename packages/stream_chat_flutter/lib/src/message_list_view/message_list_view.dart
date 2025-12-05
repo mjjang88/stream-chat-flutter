@@ -86,7 +86,7 @@ class StreamMessageListView extends StatefulWidget {
     this.scrollToBottomBuilder,
     this.showUnreadIndicator = true,
     this.unreadIndicatorBuilder,
-    this.markReadWhenAtTheBottom = false,
+    this.markReadWhenAtTheBottom = true,
     this.messageBuilder,
     this.parentMessageBuilder,
     this.parentMessage,
