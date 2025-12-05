@@ -370,6 +370,7 @@ class _StreamMessageListViewState extends State<StreamMessageListView> {
   bool initialMessageHighlightComplete = false;
 
   bool _inBetweenList = false;
+  bool _isMarkingAsRead = false;
 
   late final _defaultController = MessageListController();
 
@@ -1482,8 +1483,20 @@ class _StreamMessageListViewState extends State<StreamMessageListView> {
         if (_upToDate &&
             channel.config?.readEvents == true &&
             channel.state!.unreadCount > 0 &&
-            widget.markReadWhenAtTheBottom) {
-          streamChannel!.channel.markRead();
+            widget.markReadWhenAtTheBottom &&
+            !_isMarkingAsRead) {
+          _isMarkingAsRead = true;
+          streamChannel!.channel.markRead().then((_) {
+            _isMarkingAsRead = false;
+            if (mounted) {
+              setState(() {
+                unreadCount = streamChannel!.channel.state?.unreadCount ?? 0;
+                _userRead = streamChannel!.channel.state?.currentUserRead;
+              });
+            }
+          }).catchError((error) {
+            _isMarkingAsRead = false;
+          });
         }
       }
     }
