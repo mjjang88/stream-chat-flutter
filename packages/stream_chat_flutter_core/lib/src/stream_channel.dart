@@ -225,6 +225,17 @@ class StreamChannelState extends State<StreamChannel> {
         ),
         preferOffline: preferOffline,
       );
+
+      // Show toast with message count
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Loaded ${response.messages.length} replies'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+
       if (response.messages.isEmpty || response.messages.length < limit) {
         _topPaginationEnded = true;
       }
