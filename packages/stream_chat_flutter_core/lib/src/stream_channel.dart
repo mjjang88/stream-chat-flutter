@@ -200,7 +200,7 @@ class StreamChannelState extends State<StreamChannel> {
   /// Calls [channel.getReplies] updating [queryMessage] stream
   Future<void> getReplies(
     String parentId, {
-    int limit = 50,
+    int limit = 100,
     bool preferOffline = false,
   }) async {
     if (_topPaginationEnded ||

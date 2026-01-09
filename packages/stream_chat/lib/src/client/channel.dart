@@ -1434,16 +1434,6 @@ class Channel {
     PaginationParams? options,
     bool preferOffline = false,
   }) async {
-    final cachedReplies = await _client.chatPersistenceClient?.getReplies(
-      parentId,
-      options: options,
-    );
-    if (cachedReplies != null && cachedReplies.isNotEmpty) {
-      state?.updateThreadInfo(parentId, cachedReplies);
-      if (preferOffline) {
-        return QueryRepliesResponse()..messages = cachedReplies;
-      }
-    }
     final repliesResponse = await _client.getReplies(
       parentId,
       options: options,
