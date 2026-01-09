@@ -180,7 +180,7 @@ class MessageListCoreState extends State<MessageListCore> {
     } else {
       return _streamChannel!.getReplies(
         widget.parentMessage!.id,
-        limit: widget.paginationLimit,
+        limit: 100,
       );
     }
   }
@@ -193,7 +193,7 @@ class MessageListCoreState extends State<MessageListCore> {
       if (_streamChannel == null /*only first time*/ && _isThreadConversation) {
         newStreamChannel.getReplies(
           widget.parentMessage!.id,
-          limit: widget.paginationLimit,
+          limit: 100,
         );
       }
       _streamChannel = newStreamChannel;
@@ -214,7 +214,7 @@ class MessageListCoreState extends State<MessageListCore> {
       if (_isThreadConversation) {
         _streamChannel!.getReplies(
           widget.parentMessage!.id,
-          limit: widget.paginationLimit,
+          limit: 100,
         );
       }
     }
