@@ -1374,8 +1374,7 @@ class StreamChatClient {
     PaginationParams? options,
   }) =>
       _chatApi.message.getReplies(
-        parentId,
-        options: options,
+        parentId
       );
 
   /// Get all the reactions for a [messageId]
