@@ -458,8 +458,7 @@ class _StreamMessageListViewState extends State<StreamMessageListView> {
           });
 
       if (_isThreadConversation) {
-        streamChannel!.getReplies(widget.parentMessage!.id, limit: 100, preferOffline: false);
-        print('Fetching replies for thread: ${widget.parentMessage!.id}');
+        streamChannel!.getReplies(widget.parentMessage!.id);
       }
 
       unreadCount = streamChannel?.channel.state?.unreadCount ?? 0;
