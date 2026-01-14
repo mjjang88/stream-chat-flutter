@@ -134,7 +134,7 @@ class StreamChannelHeader extends StatelessWidget
         (showBackButton
             ? StreamBackButton(
                 onPressed: onBackPressed,
-                showUnreadCount: true,
+                showUnreadCount: false,
               )
             : const SizedBox());
 
