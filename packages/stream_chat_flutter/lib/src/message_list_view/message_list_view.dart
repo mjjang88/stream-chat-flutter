@@ -81,7 +81,7 @@ class StreamMessageListView extends StatefulWidget {
   /// {@macro streamMessageListView}
   const StreamMessageListView({
     super.key,
-    this.showScrollToBottom = true,
+    this.showScrollToBottom = false,
     this.showUnreadCountOnScrollToBottom = false,
     this.scrollToBottomBuilder,
     this.showUnreadIndicator = true,
@@ -423,13 +423,6 @@ class _StreamMessageListViewState extends State<StreamMessageListView> {
       );
 
       initialAlignment = _initialAlignment;
-
-      if (_scrollController?.isAttached == true) {
-        _scrollController?.jumpTo(
-          index: initialIndex,
-          alignment: initialAlignment,
-        );
-      }
 
       _messageNewListener =
           streamChannel!.channel.on(EventType.messageNew).listen((event) {
