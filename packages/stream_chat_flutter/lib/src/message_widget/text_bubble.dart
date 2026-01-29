@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stream_chat_flutter/src/utils/helpers.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 /// {@template textBubble}
@@ -56,7 +57,10 @@ class TextBubble extends StatelessWidget {
       child: textBuilder != null
           ? textBuilder!(context, message)
           : StreamMessageText(
-              onLinkTap: onLinkTap,
+              onLinkTap: onLinkTap ?? (String url) {
+                // 기본 동작: 링크를 브라우저에서 열기
+                launchURL(context, url);
+              },
               message: message,
               onMentionTap: onMentionTap,
               messageTheme: isOnlyEmoji

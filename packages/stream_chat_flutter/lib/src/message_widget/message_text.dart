@@ -35,15 +35,37 @@ class StreamMessageText extends StatelessWidget {
       stream: streamChat.currentUserStream.map((it) => it!.language ?? 'en'),
       initialData: streamChat.currentUser!.language ?? 'en',
       builder: (context, language) {
-        final messageText = message
+        var messageText = message
             .translate(language)
             .replaceMentions()
             .text
             ?.replaceAll('\n', '\n\n')
-            .trim();
+            .trim() ?? '';
+
+        // Convert plain URLs to markdown links so they become clickable
+        // This regex matches URLs that are NOT already in markdown link format
+        final urlRegex = RegExp(
+          r'(?<!\]\()https?://(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)',
+          caseSensitive: false,
+        );
+        
+        // Find all URL matches and convert them to markdown links
+        // Process in reverse order to maintain correct indices
+        final matches = urlRegex.allMatches(messageText).toList();
+        for (var i = matches.length - 1; i >= 0; i--) {
+          final match = matches[i];
+          final url = match.group(0)!;
+          final start = match.start;
+          final end = match.end;
+          
+          // Convert plain URL to markdown link format: [url](url)
+          messageText = messageText.substring(0, start) + 
+                       '[$url]($url)' + 
+                       messageText.substring(end);
+        }
 
         return StreamMarkdownMessage(
-          data: messageText ?? '',
+          data: messageText,
           messageTheme: messageTheme,
           selectable: isDesktopDeviceOrWeb,
           onTapLink: (
@@ -60,10 +82,12 @@ class StreamMessageText extends StatelessWidget {
 
               onMentionTap?.call(mentionedUser);
             } else {
+              // Use href if available (from markdown link), otherwise use link
+              final urlToOpen = href ?? link;
               if (onLinkTap != null) {
-                onLinkTap!(link);
+                onLinkTap!(urlToOpen);
               } else {
-                launchURL(context, link);
+                launchURL(context, urlToOpen);
               }
             }
           },
