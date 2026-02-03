@@ -45,10 +45,9 @@ class StreamMessageText extends StatelessWidget {
         // Convert plain URLs to markdown links so they become clickable
         // This regex matches URLs including those with hyphens in domain, path, and anchor
         // Pattern explicitly allows hyphens in all URL parts (e.g., usa-canada, #_enliple)
-        // Simplified pattern to better handle hyphens in path segments
-        // Note: Removed single quote from character class to avoid string parsing issues
+        // Based on stream_message_input.dart pattern but without word boundary to handle hyphens
         final urlRegex = RegExp(
-          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:[/?#][-\w/_.~!*();:@&=+\$,%#\[\]]*)?',
+          r'(?<!\]\()https?://(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,}(?:[-a-zA-Z0-9@:%_+.~#?&//=]*)?',
           caseSensitive: false,
         );
         
