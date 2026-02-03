@@ -47,7 +47,7 @@ class StreamMessageText extends StatelessWidget {
         // Pattern explicitly allows hyphens in all URL parts (e.g., usa-canada, #_enliple)
         // Simplified pattern to better handle hyphens in path segments
         final urlRegex = RegExp(
-          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:[/?#][-\w/_.~!*'"();:@&=+$,%#\[\]]*)?',
+          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:[/?#][-\w/_.~!*'"();:@&=+\$,%#\[\]]*)?',
           caseSensitive: false,
         );
         
