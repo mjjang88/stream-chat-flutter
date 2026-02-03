@@ -43,10 +43,11 @@ class StreamMessageText extends StatelessWidget {
             .trim() ?? '';
 
         // Convert plain URLs to markdown links so they become clickable
-        // This regex matches URLs including those with hyphens in the domain
-        // Pattern allows hyphens anywhere in domain and path
+        // This regex matches URLs including those with hyphens in domain, path, and anchor
+        // Pattern explicitly allows hyphens in all URL parts (e.g., usa-canada, #_enliple)
+        // Simplified pattern to better handle hyphens in path segments
         final urlRegex = RegExp(
-          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:/(?:[\w/_.-])*(?:\?(?:[\w&=%.])*)?(?:#(?:\w)*)?)?',
+          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:[/?#][-\w/_.~!*'"();:@&=+$,%#\[\]]*)?',
           caseSensitive: false,
         );
         
