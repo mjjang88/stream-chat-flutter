@@ -35,15 +35,58 @@ class StreamMessageText extends StatelessWidget {
       stream: streamChat.currentUserStream.map((it) => it!.language ?? 'en'),
       initialData: streamChat.currentUser!.language ?? 'en',
       builder: (context, language) {
-        final messageText = message
+        var messageText = message
             .translate(language)
             .replaceMentions()
             .text
             ?.replaceAll('\n', '\n\n')
-            .trim();
+            .trim() ?? '';
+
+        // Convert plain URLs to markdown links so they become clickable
+        // This regex matches URLs including those with hyphens in the domain
+        // Pattern allows hyphens anywhere in domain and path
+        final urlRegex = RegExp(
+          r'(?<!\]\()https?://(?:www\.)?[-\w.]+(?:[:\d]+)?(?:/(?:[\w/_.-])*(?:\?(?:[\w&=%.])*)?(?:#(?:\w)*)?)?',
+          caseSensitive: false,
+        );
+        
+        // Find all URL matches and convert them to markdown links
+        // Process in reverse order to maintain correct indices
+        final matches = urlRegex.allMatches(messageText).toList();
+        for (var i = matches.length - 1; i >= 0; i--) {
+          final match = matches[i];
+          var url = match.group(0)!;
+          final start = match.start;
+          var end = match.end;
+          
+          // Trim trailing punctuation that's likely not part of the URL
+          // But keep punctuation that's valid in URLs (like /, ?, &, =, #, -, etc.)
+          while (end > start) {
+            final char = messageText[end - 1];
+            // Keep URL-valid characters
+            if (RegExp(r'[a-zA-Z0-9\-@:%_+.~#?&//=]').hasMatch(char)) {
+              break;
+            }
+            // Stop if we hit whitespace or common sentence-ending punctuation
+            if (char == ' ' || char == '\n' || char == '\t' || 
+                char == '.' || char == ',' || char == '!' || char == '?' ||
+                char == ')' || char == ']' || char == '}' || char == '>') {
+              end--;
+              url = url.substring(0, url.length - 1);
+              break;
+            }
+            end--;
+            url = url.substring(0, url.length - 1);
+          }
+          
+          // Convert plain URL to markdown link format: [url](url)
+          messageText = messageText.substring(0, start) + 
+                       '[$url]($url)' + 
+                       messageText.substring(end);
+        }
 
         return StreamMarkdownMessage(
-          data: messageText ?? '',
+          data: messageText,
           messageTheme: messageTheme,
           selectable: isDesktopDeviceOrWeb,
           onTapLink: (
@@ -60,10 +103,12 @@ class StreamMessageText extends StatelessWidget {
 
               onMentionTap?.call(mentionedUser);
             } else {
+              // Use href if available (from markdown link), otherwise use link
+              final urlToOpen = href ?? link;
               if (onLinkTap != null) {
-                onLinkTap!(link);
+                onLinkTap!(urlToOpen);
               } else {
-                launchURL(context, link);
+                launchURL(context, urlToOpen);
               }
             }
           },
