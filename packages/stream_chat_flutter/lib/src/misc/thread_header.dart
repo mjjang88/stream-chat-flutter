@@ -160,7 +160,7 @@ class StreamThreadHeader extends StatelessWidget
               ? StreamBackButton(
                   channelId: StreamChannel.of(context).channel.cid,
                   onPressed: onBackPressed,
-                  showUnreadCount: true,
+                  showUnreadCount: false,
                 )
               : const SizedBox()),
       backgroundColor: backgroundColor ?? channelHeaderTheme.color,
