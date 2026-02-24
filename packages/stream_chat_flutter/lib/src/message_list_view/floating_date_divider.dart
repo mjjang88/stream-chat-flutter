@@ -59,12 +59,14 @@ class FloatingDateDivider extends StatelessWidget {
           return const Offstage();
         }
 
-        if (index <= 2 || index >= itemCount - 3) {
+        if (index >= itemCount - 3) {
           if (reverse) {
             index = itemCount - 4;
           } else {
             index = 2;
           }
+        } else if (index <= 2) {
+          index = 2;
         }
 
         final message = messages[index - 2];
