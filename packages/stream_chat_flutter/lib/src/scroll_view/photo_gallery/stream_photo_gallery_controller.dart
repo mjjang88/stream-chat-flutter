@@ -17,10 +17,14 @@ class StreamPhotoGalleryController
     RequestType type = RequestType.common,
     FilterOptionGroup? filterOption,
   }) {
+    final effectiveFilterOption = filterOption ??
+        FilterOptionGroup(
+          orders: [const OrderOption(type: OrderOptionType.createDate, asc: false)],
+        );
     return PhotoManager.getAssetPathList(
       type: type,
       onlyAll: true,
-      filterOption: filterOption,
+      filterOption: effectiveFilterOption,
     ).then((it) => it.firstOrNull);
   }
 
