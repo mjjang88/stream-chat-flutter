@@ -1065,11 +1065,9 @@ class Channel {
       extraData: extraData,
     );
 
-    latestReactions = (latestReactions
+    latestReactions = latestReactions
           // Inserting at the 0th index as it's the latest reaction
-          ..insert(0, newReaction))
-        .take(10)
-        .toList();
+          ..insert(0, newReaction);
     final ownReactions = enforceUnique
         ? <Reaction>[newReaction]
         : <Reaction>[
